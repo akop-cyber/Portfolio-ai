@@ -26,7 +26,6 @@ app.add_middleware(
 
 MODELS = [
     ("Qwen/Qwen2.5-72B-Instruct"),
-    ("Qwen/Qwen2.5-72B-Instruct"),
     ("meta-llama/Llama-3.2-3B-Instruct"),
     ("meta-llama/Llama-3.2-3B-Instruct"),
     ("meta-llama/Llama-3.2-3B-Instruct"),
@@ -62,11 +61,11 @@ class ChatRequest(BaseModel):
 
 @app.post("/chat")
 async def chat(req: ChatRequest):
-    session_id = str(uuid.uuid4())
-    sessions[session_id] = {"store": store, "embedder": embedder}
-    session = sessions[session_id]
+    session = sessions.get(req.session_id)
     if not session:
-        raise HTTPException(status_code=404, detail="Session not found.")
+        sessions[req.session_id] = {"store": store, "embedder": embedder}
+        session = sessions[req.session_id]
+
 
     store    = session["store"]
     embedder = session["embedder"]
