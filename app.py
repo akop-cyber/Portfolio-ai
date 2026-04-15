@@ -45,7 +45,7 @@ sessions: dict = {}
 
 
 
-text     = Loader(pass).load()
+text     = Loader("portfolio.pdf").load()
 chunks   = Chunker().chunker(text)
 embedder = Embedder()
 vectors  = embedder.embed(chunks)
