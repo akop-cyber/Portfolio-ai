@@ -67,10 +67,10 @@ async def chat(req: ChatRequest):
         session = sessions[req.session_id]
 
 
-    store    = session["store"]
-    embedder = session["embedder"]
+    s_store    = session["store"]
+    s_embedder = session["embedder"]
 
-    retriever      = Retriever(store, embedder, k=3)
+    retriever      = Retriever(s_store, s_embedder, k=3)
     context_chunks = retriever.retrieve(req.message)
 
     if not context_chunks:
