@@ -59,7 +59,7 @@ class ChatRequest(BaseModel):
     message:    str
     history:    list
 
-@app.post("/chat")
+@app.post("/")
 async def chat(req: ChatRequest):
     session = sessions.get(req.session_id)
     if not session:
